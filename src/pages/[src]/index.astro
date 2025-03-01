@@ -2,6 +2,9 @@
 import { getCollection } from 'astro:content';
 const todos = await getCollection('todos');
 console.log(todos[0]);
+export async function getStaticPaths() {
+return [{params: {src: "todos"}}];
+}
 ---
 
 <html lang="en">
@@ -10,10 +13,10 @@ console.log(todos[0]);
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Collection: Todos</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<h1>Todos</h1>
     <ul>
       {todos.map((todo) => (<li>{todo.data.title}</li>))}
 	</body>

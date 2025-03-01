@@ -1,0 +1,23 @@
+---
+import { getEntry, getCollection, render } from 'astro:content';
+const { src, path } = Astro.params;
+const todo = await getEntry(src, path);
+
+export async function getStaticPaths() {
+return (await getCollection("todos")).map((todo) => ({
+params: {
+src: "todos",
+path: todo.id.toString(),
+}}));
+}
+
+if (!todo) return Astro.redirect('/404');
+---
+<html>
+  <head>
+    <title>Todo ID</title>
+  </head>
+  <body>
+    <h1>{todo.data.title}</h1>
+  </body>
+</html>
