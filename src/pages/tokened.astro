@@ -1,0 +1,32 @@
+---
+---
+<h1>Enter the token to continue</h1>
+<input type="text" id="pwd-box">
+<button id="goDoThing">Submit</button>
+
+<script is:inline>
+  console.log("MERP")
+  const redirectUrl = getParamsFromUrl(window.location.href).url || window.location.href;
+  console.log(redirectUrl);
+function getParamsFromUrl(url) {
+  try {
+    const params = new URL(url).searchParams;
+    return Object.fromEntries(params.entries());
+  } catch (error) {
+    console.error("Invalid URL:", error.message);
+    return {};
+  }
+}
+  function buttonClick(){
+    console.log({redirectUrl});
+    var text = document.getElementById("pwd-box").value;
+    console.log("Going to",(redirectUrl + "?token=" + encodeURIComponent(text)))
+    window.location.replace(redirectUrl + "?token=" + encodeURIComponent(text));
+  }
+  document.getElementById("goDoThing").addEventListener("click", buttonClick);
+  document.getElementById("pwd-box").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      buttonClick();
+    }
+  });
+</script>
